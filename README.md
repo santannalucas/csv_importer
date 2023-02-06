@@ -16,11 +16,13 @@ ruby 3.0.0p0 (2020-12-25 revision 95aff21468) [x86_64-linux]
 user@ubuntu:~/sentia$ rails -v
 Rails 7.0.4.2
 
+user@ubuntu:~/sentia$ bundle install
+
 ```
 
 * Database creation
 
-Application use PostgreSQL Database by default, configuration should look like this:
+Application use PostgreSQL Database, configuration should look like this:
 
 ```yml
 # PostgreSQL 10

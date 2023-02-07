@@ -5,3 +5,28 @@
   <%= file_field_tag :file %>
   <%= submit_tag "Upload" %>
 <% end %>
+
+<table style="margin: 50px 0;">
+  <tr>
+    <th> First Name </th>
+    <th> Last Name </th>
+    <th> Locations </th>
+    <th> Species </th>
+    <th> Gender </th>
+    <th> Affiliations </th>
+    <th> Weapon </th>
+    <th> Vehicle </th>
+  </tr>
+  <% @people.each do |person| %>
+  <tr>
+    <td> <%= person.first_name %></td>
+    <td> <%= person.last_name %></td>
+    <td> </td>
+    <td> <%= person.species %></td>
+    <td> <%= person.gender %></td>
+    <td> </td>
+    <td> <%= person.weapon %></td>
+    <td> <%= person.vehicle %></td>
+  </tr>
+  <% end %>
+</table>

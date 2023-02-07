@@ -6,5 +6,5 @@ Rails.application.routes.draw do
 
   root "people#index"
   post 'upload_file'   => 'people#upload_file'
-  get 'people' => 'people#index'
+  resources :people, :except => [:show,:edit,:new]
 end

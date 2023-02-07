@@ -33,10 +33,11 @@
     <td> <%= person.affiliations.collect{|x| x.name}.to_sentence %></td>
     <td> <%= person.weapon %></td>
     <td> <%= person.vehicle %></td>
+    <td> <%= button_to 'Delete',person_path(id:person.id), :method => :delete %></td>
   </tr>
   <% end %>
 </table>
-<%= will_paginate @people %>
+<%= will_paginate @people if @people.present? %>
 <% if flash.present? %>
   <% flash.each do |key, value| %>
     <% flash_value = value  %>

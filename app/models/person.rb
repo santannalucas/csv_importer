@@ -20,22 +20,34 @@ class Person < ActiveRecord::Base
       @person = Person.where(first_name:first_name,last_name:last_name).first_or_initialize
       @person.assign_attributes(
         species:row[2],
-        gender:row[3],
+        gender:Person.get_gender(row[3]),
         weapon:row[5],
         vehicle:row[6]
       )
       # Create Affiliations / Locations
       if @person.save
+        @person.affiliations.delete_all
         row[4].split(',').each do |aff| @person.affiliations.where(name:aff.titleize).first_or_create end
-        @person.affiliations.where.not(name:row[4].split(',')).delete_all
+        @person.locations.delete_all
         row[1].split(',').each do |loc| @person.locations.where(name:loc.titleize).first_or_create end
-        @person.locations.where.not(name:row[1].split(',')).delete_all
       end
       # Return Result
       " #{first_name.titleize + last_name.titleize} - #{@person.errors.present? ? "ERROR: #{@person.errors.full_messages}" : 'Success'}"
     else
       # Affiliation not Found
       " #{first_name.titleize + last_name.titleize} - ERROR: Affiliation not Fount"
+    end
+  end
+
+  def self.get_gender(gender)
+    original = gender.underscore.first
+    case original
+    when 'm'
+      'Male'
+    when 'f'
+      'Female'
+    else
+      'Other'
     end
   end
 

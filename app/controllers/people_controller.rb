@@ -13,7 +13,7 @@ class PeopleController < ApplicationController
     if params[:file]
       file = File.open(params[:file])
       # Handling if file not CSV/Readable
-      begin
+      #begin
       result = []
         row_count = 1
         CSV.foreach(file.path).each do |row|
@@ -21,14 +21,15 @@ class PeopleController < ApplicationController
             result << Person.parse_row(row) unless row_count == 1
           row_count += 1
         end
-      rescue e
-        flash = "<style='color:red'>Could not read from file, please upload CSV file only.</style>"
-        Rails.logger.info(e)
-      end
-      Rails.logger.info(result)
-      flash[:notice] = result
-      redirect_to people_path
+        result = result.join(' / ')
+      #rescue
+      # result = "<style='color:red'>Could not read from file, please upload CSV file only.</style>"
+      #end
+    else
+      result = "File not Found"
     end
+    flash[:notice] = result
+    redirect_to people_path
   end
 
   def destroy

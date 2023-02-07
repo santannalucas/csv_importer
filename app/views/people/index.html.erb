@@ -21,12 +21,19 @@
   <tr>
     <td> <%= person.first_name %></td>
     <td> <%= person.last_name %></td>
-    <td> </td>
+    <td> <%= person.locations.collect{|x| x.name}.to_sentence %></td>
     <td> <%= person.species %></td>
     <td> <%= person.gender %></td>
-    <td> </td>
+    <td> <%= person.affiliations.collect{|x| x.name}.to_sentence %></td>
     <td> <%= person.weapon %></td>
     <td> <%= person.vehicle %></td>
   </tr>
   <% end %>
 </table>
+<%= will_paginate @people %>
+<% if flash.present? %>
+  <% flash.each do |key, value| %>
+    <% flash_value = value  %>
+    <%= content_tag :div, flash_value.html_safe, class: "flash #{key}" %>
+  <% end %>
+<% end %>

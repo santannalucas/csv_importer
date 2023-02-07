@@ -2,8 +2,10 @@ class PeopleController < ApplicationController
 
   require 'csv'
   require 'will_paginate/array'
+  include PeopleHelper
   def index
-    @people = Person.paginate(:page => params[:page], :per_page => 10)
+    @people = Person.all.search(params[:search])
+    @people = @people.order(sort_column + " " + sort_direction).paginate(:page => params[:page], :per_page => 10) if @people.present?
   end
 
   def upload_file
@@ -47,4 +49,7 @@ class PeopleController < ApplicationController
     end
     " #{first_name.titleize + last_name.titleize}: #{@person.errors.present? ? "ERROR: #{@person.errors.full_messages}" : 'Success'}"
   end
+
+
+
 end

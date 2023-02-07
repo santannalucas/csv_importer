@@ -6,9 +6,15 @@
   <%= submit_tag "Upload" %>
 <% end %>
 
-<table style="margin: 50px 0;">
+
+<%= form_tag(people_path, :method => "get") do %>
+   <%= text_field_tag :search, params[:search], placeholder: 'Search by Name' %>
+  <%= submit_tag "Search" %>
+<% end %>
+
+          <table style="margin: 50px 0;">
   <tr>
-    <th> First Name </th>
+    <th><%= sort('people.first_name', 'First Name') %> </th>
     <th> Last Name </th>
     <th> Locations </th>
     <th> Species </th>

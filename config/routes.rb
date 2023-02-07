@@ -4,8 +4,7 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "articles#index"
 
-  resource :people
-
   root "people#index"
-
+  post 'upload_file'   => 'people#upload_file'
+  get 'people' => 'people#index'
 end

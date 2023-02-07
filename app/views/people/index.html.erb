@@ -1,10 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<h1>Sentia CSV to DB</h1>
 
-</body>
-</html>
+<%= form_tag(upload_file_path, multipart:true, method: 'post') do %>
+  <label for="file">Upload CSV file:</label>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Upload" %>
+<% end %>

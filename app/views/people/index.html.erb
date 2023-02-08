@@ -1,4 +1,4 @@
-       <div id=center>
+<div id=center>
   <h1>Sentia CSV to DB</h1>
 
   <h2>Upload File</h2>
@@ -9,47 +9,48 @@
 
   <h2> Search </h2>
   <%= form_tag(people_path, :method => "get") do %>
-     <%= text_field_tag :search, params[:search], placeholder: 'Search by Name', class: 'input'%>
+     <%= text_field_tag :search, params[:search], placeholder: 'Search on All fields', class: 'input'%>
     <%= submit_tag "Search" %>
   <% end %>
 
+  <%= button_to 'Clear Search', people_path, method:'get', class:'reload' %>
 
-
-  <h2> Database </h2>
-  <table class="main-table">
-    <tr>
-      <th style="width: 8%"><%= sort('people.first_name', 'First Name') %> </th>
-      <th style="width: 8%"><%= sort('people.last_name', 'Last Name') %> </th>
-      <th style="width: 20%"><%= sort('locations.name', 'Locations') %> </th>
-      <th style="width: 10%"><%= sort('people.species', 'Species')   %> </th>
-      <th style="width: 5%"><%= sort('people.gender', 'Gender')     %> </th>
-      <th style="width: 20%"><%= sort('affiliations.name', 'Affiliations') %></th>
-      <th style="width: 10%"><%= sort('people.weapon', 'Weapon') %> </th>
-      <th style="width: 20%"><%= sort('people.vehicle', 'Vehicle') %> </th>
-    </tr>
-    <% @people.each do |person| %>
-    <tr>
-      <td> <%= person.first_name %></td>
-      <td> <%= person.last_name %></td>
-      <td> <%= person.locations.collect{|x| x.name}.to_sentence %></td>
-      <td> <%= person.species %></td>
-      <td> <%= person.gender %></td>
-      <td> <%= person.affiliations.collect{|x| x.name}.to_sentence %></td>
-      <td> <%= person.weapon %></td>
-      <td> <%= person.vehicle %></td>
-      <td> <%= button_to 'Delete',person_path(id:person.id), :method => :delete %></td>
-    </tr>
-    <% end %>
-  </table>
+  <div class="table-wrapper">
+    <table class="main-table">
+      <tr>
+        <th style="width: 8%"><%= sort('people.first_name', 'First Name') %> </th>
+        <th style="width: 8%"><%= sort('people.last_name', 'Last Name') %> </th>
+        <th style="width: 18%"><%= sort('locations.name', 'Locations') %> </th>
+        <th style="width: 10%"><%= sort('people.species', 'Species')   %> </th>
+        <th style="width: 5%"><%= sort('people.gender', 'Gender')     %> </th>
+        <th style="width: 18%"><%= sort('affiliations.name', 'Affiliations') %></th>
+        <th style="width: 10%"><%= sort('people.weapon', 'Weapon') %> </th>
+        <th style="width: 18%"><%= sort('people.vehicle', 'Vehicle') %> </th>
+        <th style="width: 5%;"></th>
+      </tr>
+      <% @people.each do |person| %>
+      <tr>
+        <td> <%= person.first_name %></td>
+        <td> <%= person.last_name %></td>
+        <td> <%= person.locations.collect{|x| x.name}.to_sentence %></td>
+        <td> <%= person.species %></td>
+        <td> <%= person.gender %></td>
+        <td> <%= person.affiliations.collect{|x| x.name}.to_sentence %></td>
+        <td> <%= person.weapon %></td>
+        <td> <%= person.vehicle %></td>
+        <td> <%= button_to 'Delete',person_path(id:person.id), :method => :delete %></td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
   <%= will_paginate @people if @people.present? %>
 
-
-
   <% if flash.present? %>
-    <h2> Import Result: </h2>
+    <h2> Result: </h2>
     <% flash.each do |key, value| %>
       <% flash_value = value  %>
       <%= content_tag :div, flash_value.to_s.html_safe, class: "flash #{key}" %>
     <% end %>
   <% end %>
+
 </div>

@@ -3,9 +3,10 @@ class PeopleController < ApplicationController
   require 'csv'
   require 'will_paginate/array'
   include PeopleHelper
+
   def index
-    @people = Person.all.search(params[:search])
-    @people = @people.order("#{sort_column} #{sort_direction}").paginate(:page => params[:page], :per_page => 10) if @people.present?
+    @people = Person.joins(:affiliations, :locations).search(params[:search])
+    @people = @people.order("#{sort_column} #{sort_direction}").uniq.paginate(:page => params[:page], :per_page => 10) if @people.present?
   end
 
   def upload_file
@@ -13,18 +14,18 @@ class PeopleController < ApplicationController
     if params[:file]
       file = File.open(params[:file])
       # Handling if file not CSV/Readable
-      #begin
+      begin
       result = []
         row_count = 1
         CSV.foreach(file.path).each do |row|
           #  Check for Header / Affiliation
-            result << Person.parse_row(row) unless row_count == 1
+            result << Person.parse_row(row,row_count) unless row_count == 1
           row_count += 1
         end
         result = result.join(' / ')
-      #rescue
-      # result = "<style='color:red'>Could not read from file, please upload CSV file only.</style>"
-      #end
+      rescue
+       result = "<span style='color:red'>Could not read from file, please upload CSV file only.</span>"
+      end
     else
       result = "File not Found"
     end
@@ -34,15 +35,8 @@ class PeopleController < ApplicationController
 
   def destroy
     @person = Person.find(params[:id])
-    if @person.delete
-    else
-
-    end
-    redirect_back(fallback_location: people_path)
+    flash[:notice] = 'Person Deleted.' if @person.delete
+    redirect_to person_path
   end
-
-
-
-
 
 end

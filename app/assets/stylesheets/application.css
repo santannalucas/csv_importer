@@ -38,7 +38,11 @@ a { color: inherit; }
      margin: 0 2% ;
  }
 
+ .table-wrapper{
+    height:350px;
+     }
  .main-table{
+     margin-top: 50px;
      font-size: .9rem;
      width: 90%;
      table-layout: fixed;
@@ -55,7 +59,7 @@ a { color: inherit; }
 }
 
 .input{
-    padiding: 3px;
+    padding: 3px;
     border: 1px solid black;
     width: 500px;
     line-height: 25px;
@@ -73,4 +77,12 @@ h2{
     margin: 20px;
     width: 100%;
     text-align: center;
+}
+
+.flash{
+    width: 80%;
+}
+
+.reload{
+    margin: 10px;
 }

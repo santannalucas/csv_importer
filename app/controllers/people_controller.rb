@@ -5,7 +5,8 @@ class PeopleController < ApplicationController
   include PeopleHelper
 
   def index
-    @people = Person.joins(:affiliations, :locations).search(params[:search])
+    # Search, Order and Pagination
+    @people = Person.left_joins(:affiliations, :locations).search(params[:search])
     @people = @people.order("#{sort_column} #{sort_direction}").uniq.paginate(:page => params[:page], :per_page => 10) if @people.present?
   end
 
@@ -13,20 +14,22 @@ class PeopleController < ApplicationController
     # Check if file was provided.
     if params[:file]
       file = File.open(params[:file])
-      # Handling if file not CSV/Readable
+      # Handling if file not CSV or out of format
       begin
       result = []
         row_count = 1
+        # Parsing/Importing Rows
         CSV.foreach(file.path).each do |row|
-          #  Check for Header / Affiliation
             result << Person.parse_row(row,row_count) unless row_count == 1
           row_count += 1
         end
         result = result.join(' / ')
       rescue
-       result = "<span style='color:red'>Could not read from file, please upload CSV file only.</span>"
+        # If cannot read file
+        result = "<span style='color:red'>Could not read from file, please upload CSV file only.</span>"
       end
     else
+      # File not provided
       result = "File not Found"
     end
     flash[:notice] = result
@@ -36,7 +39,7 @@ class PeopleController < ApplicationController
   def destroy
     @person = Person.find(params[:id])
     flash[:notice] = 'Person Deleted.' if @person.delete
-    redirect_to person_path
+    redirect_to root_path
   end
 
 end

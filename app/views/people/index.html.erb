@@ -9,7 +9,7 @@
 
   <h2> Search </h2>
   <%= form_tag(people_path, :method => "get") do %>
-     <%= text_field_tag :search, params[:search], placeholder: 'Search on All fields', class: 'input'%>
+     <%= text_field_tag :search, params[:search], placeholder: 'Search on all fields', class: 'input'%>
     <%= submit_tag "Search" %>
   <% end %>
 

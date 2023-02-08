@@ -2,21 +2,26 @@
 
 CSV to SQL
 
+* Get repository
+
+```shell
+git clone https://github.com/santannalucas/csv_importer.git
+```
 * Ruby version
 
 This app uses Ruby 3.0.0 and Rails ~> 7.0, be sure to change you version manager to version 3 and that you have rails 7 installed:
 
 ```shell
-user@ubuntu:~/sentia$ rvm use ruby-3.0.0
+user@ubuntu:~/csv_importer$ rvm use ruby-3.0.0
 Using /home/user/.rvm/gems/ruby-3.0.0
 
-user@ubuntu:~/sentia$ ruby -v
+user@ubuntu:~/csv_importer$ ruby -v
 ruby 3.0.0p0 (2020-12-25 revision 95aff21468) [x86_64-linux]
 
-user@ubuntu:~/sentia$ rails -v
+user@ubuntu:~/csv_importer$ rails -v
 Rails 7.0.4.2
 
-user@ubuntu:~/sentia$ bundle install
+user@ubuntu:~/csv_importer$ bundle install
 
 ```
 
@@ -51,6 +56,22 @@ test:
 ```shell
 rake db:create
 rake db:migrate
+```
+
+* Running Application
+
+To run applications just start the server:
+```shell
+    user@ubuntu:~/csv_importer$ rails s
+```
+And then open localhost on you browser (preferable Chrome) http://127.0.0.1:3000
+
+* Test Unit
+
+You can ran the test unit as per below:
+
+```shell
+    user@ubuntu:~/csv_importer$ rails test
 ```
 
 # Importer Requirements
